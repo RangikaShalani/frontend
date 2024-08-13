@@ -13,15 +13,18 @@ import Image from "next/image";
 import "../components/style/custom.css";
 import logoimage from "../../../public/cake2.jpg";
 import { useState } from "react";
+import { useStore } from "../store";
+import { toast } from "react-toastify";
 
 function SignUp() {
-  const [userFirstname, setUserFirstname] = useState("");
-  const [userLastname, setUserLastname] = useState("");
-  const [userEmail, setUserEmail] = useState("");
-  const [userPassword, setUserPassword] = useState("");
-  const [userComPassword, setUserComPassword] = useState("");
+  const { userStore } = useStore();
 
- 
+  const [firstname, setUserFirstname] = useState("");
+  const [lastname, setUserLastname] = useState("");
+  const [email, setUserEmail] = useState("");
+  const [password, setUserPassword] = useState("");
+  const [comPassword, setUserComPassword] = useState("");
+
   const [userFirstnameError, setUserFirstnameError] = useState("");
   const [userLastnameError, setUserLastnameError] = useState("");
   const [userEmailError, setUserEmailError] = useState("");
@@ -29,26 +32,32 @@ function SignUp() {
   const [userComPasswordError, setUserComPasswordError] = useState("");
 
   const userSignUp = async (e: any) => {
-    if (userFirstname === "") {
-        setUserFirstnameError("Please enter the First Name");
-    } else if (userLastname === "") {
-        setUserLastnameError("Please enter the Last Name");
-    } else if (userEmail === "") {
-        setUserEmailError("Please enter the Email");
+    if (firstname === "") {
+      setUserFirstnameError("Please enter the First Name");
+    } else if (lastname === "") {
+      setUserLastnameError("Please enter the Last Name");
+    } else if (email === "") {
+      setUserEmailError("Please enter the Email");
+    } else if (!/^[a-zA-Z0-9]+@[a-zA-Z0-9]+(\.[a-zA-Z]+)+$/.test(email)) {
+      setUserEmailError("Please enter the valid Email");
+    } else if (password === "") {
+      setUserPasswordError("Please enter the Password");
+    } else if (comPassword === "") {
+      setUserComPasswordError("Please enter the Confirm Password");
+    } else if (!(comPassword === password)) {
+      setUserComPasswordError("Miss Match your password. Please Re-enter");
+    } else {
+        await userStore.register({
+            firstname,
+            lastname,
+            email,
+            password
+        }).then((res) =>{
+            toast.success("Register Success!");
+            
+        })
     }
-    else if (!/^[a-zA-Z0-9]+@[a-zA-Z0-9]+(\.[a-zA-Z]+)+$/.test(userEmail)) {
-        setUserEmailError("Please enter the valid Email");
-    } else if (userPassword === "") {
-        setUserPasswordError("Please enter the Password");
-    } else if (userComPassword === "") {
-        setUserComPasswordError("Please enter the Confirm Password");
-    }else if (!(userComPassword === userPassword)) {
-        setUserComPasswordError("Miss Match your password. Please Re-enter");
-    }else{
-        
-    }
-
-  }
+  };
 
   return (
     <Container sx={{ py: 10, textAlign: "center" }}>
@@ -106,10 +115,10 @@ function SignUp() {
                   variant="outlined"
                   margin="normal"
                   onChange={(e) => setUserLastname(e.target.value)}
-                  />
-                  {userLastnameError !== "" ? (
-                    <label className="text-danger">{userLastnameError}</label>
-                  ) : null}
+                />
+                {userLastnameError !== "" ? (
+                  <label className="text-danger">{userLastnameError}</label>
+                ) : null}
               </Grid>
             </Grid>
 
@@ -120,10 +129,10 @@ function SignUp() {
               margin="normal"
               sx={{ mt: 4 }}
               onChange={(e) => setUserEmail(e.target.value)}
-              />
-              {userEmailError !== "" ? (
-                <label className="text-danger">{userEmailError}</label>
-              ) : null}
+            />
+            {userEmailError !== "" ? (
+              <label className="text-danger">{userEmailError}</label>
+            ) : null}
             <TextField
               fullWidth
               label="Password"
@@ -132,10 +141,10 @@ function SignUp() {
               margin="normal"
               sx={{ mt: 3 }}
               onChange={(e) => setUserPassword(e.target.value)}
-              />
-              {userPasswordError !== "" ? (
-                <label className="text-danger">{userPasswordError}</label>
-              ) : null}
+            />
+            {userPasswordError !== "" ? (
+              <label className="text-danger">{userPasswordError}</label>
+            ) : null}
             <TextField
               fullWidth
               label="Confirm Password"
@@ -144,10 +153,10 @@ function SignUp() {
               margin="normal"
               sx={{ mt: 3 }}
               onChange={(e) => setUserComPassword(e.target.value)}
-              />
-              {userComPassword !== "" ? (
-                <label className="text-danger">{userComPassword}</label>
-              ) : null}
+            />
+            {userComPasswordError !== "" ? (
+              <label className="text-danger">{userComPasswordError}</label>
+            ) : null}
             <Button
               fullWidth
               variant="contained"

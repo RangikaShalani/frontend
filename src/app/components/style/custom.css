@@ -1,0 +1,35 @@
+
+.css-hip9hq-MuiPaper-root-MuiAppBar-root {
+    background-color: #F9F0EB !important;
+}
+
+.primary-button{
+    color: #644734;
+    background-color: #F1BDB0;
+}
+
+.search-icon-wrapper {
+  padding: 0px 10px;
+  height: 100%;
+  position: "absolute";
+  display: "flex";
+  align-items: center;
+  justify-content: right;
+  background-color: white;
+  margin: 0px 20px;
+  border-radius: 20px;
+  width: 100%;
+  
+
+}
+
+.nav-search-input-base{
+
+}
+
+.nav-bar-button-comp{
+    width: 100%;
+    background-color: blueviolet;
+    display: flex;
+    justify-content: right;
+}

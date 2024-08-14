@@ -1,11 +1,12 @@
 import { requests } from "./client";
 import {UserDataFeeld} from "../app/types/userType";
+import { User} from "../app/store/user";
 
-const User = {
+const Users = {
 
     signUp: (userfeeld: UserDataFeeld) =>
-        requests.post<UserDataFeeld>("api/app/signup", userfeeld),
+        requests.post<User>("api/app/create-user", userfeeld),
 
 }
 
-export default User;
+export default Users;

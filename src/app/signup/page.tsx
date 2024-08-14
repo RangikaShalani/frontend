@@ -32,6 +32,7 @@ function SignUp() {
   const [userComPasswordError, setUserComPasswordError] = useState("");
 
   const userSignUp = async (e: any) => {
+    e.preventDefault();
     if (firstname === "") {
       setUserFirstnameError("Please enter the First Name");
     } else if (lastname === "") {

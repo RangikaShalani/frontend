@@ -7,8 +7,19 @@ export interface User {
     firstName: string,
     lastName: string,
     email: string;
+    userType: string;
+    cart?:Cart[];
+    favourite?: Favourite[];
     
   };
+  export interface Cart {
+    _id: string;
+    stockId: string;
+    unit: number;
+  }
+  export interface Favourite {
+    stockId: string;
+  }
   export interface Image {
     _id: string;
     url: string;
